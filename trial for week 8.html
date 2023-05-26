@@ -1,0 +1,168 @@
+<html>
+    <head>
+        <style>
+            img {
+                width: 25%;
+                height: 25%;
+                border: 2px solid black;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Slot Machine</h1>
+        <hr>
+
+        <div style="width: 100%; overflow: hidden">
+            <!-- Cash and Betting -->
+            <div style="width: 50%; float: left;">
+                <p id="p_Cash">Cash: $$$$.$$</p>
+                <p>
+                    Bet: <input type="number" id="tb_Bet" placeholder="Minimum $10 Bet" oninput="mybet();" />
+                </p>
+            </div>
+            <!-- Buttons -->
+            <div style="margin-left: 50%;">
+                <input type="button" id="btn_Play" value="Play Slots!" style="padding: 10px;" onclick="playSlots();" />
+                <input type="button" value="Bet Maximum" style="padding: 10px;" onclick="betMax();" />
+                <input type="button" value="Reset" style="padding: 10px;" onclick="resetCash();"/>
+            </div>
+        </div>
+        
+        <!-- Output Message -->
+        <hr>
+        <div id="d_Output">Place your bet to play!</div>
+        <hr>
+
+
+        <div id="div1">
+
+        </div>
+        <div>
+            <img id="pic1" src="images/Seven-512.png" alt="seven">
+            <img id="pic2" src="images/Seven-512.png" alt="seven">
+            <img id="pic3" src="images/Seven-512.png" alt="seven">
+        </div>
+        <script>
+
+            //global variable
+            const STARTING_CASH = 1000.0;
+            const MINIMUM_BET = 10.0;
+            var cashOnHand = STARTING_CASH;
+        
+
+            //game start
+
+            gamestart();
+
+
+            function gamestart(){
+               document.getElementById("p_Cash").innerText = "Account Balance of $" + STARTING_CASH;
+               document.getElementById("tb_Bet").value= "";
+               document.getElementById("d_Output").innerText = "Place your bet to play!";
+               //displayCash.innerText = STARTING_CASH;
+
+            }
+
+            function resetCash()
+            {
+                cashOnHand = STARTING_CASH;
+                gamestart();
+            }
+
+          //function for updating the cash at hand
+        function mybet(){
+            var betCash = parseInt(document.getElementById("tb_Bet").value);
+            
+            
+        }
+    
+        //fucntion for winner 
+        function win(){
+            
+                var betCash = parseInt(document.getElementById("tb_Bet").value);
+                document.getElementById("d_Output").innerText = "You have won!!" + betCash + "have added to your account";
+                var newvault = cashOnHand + betCash;
+                cashOnHand = newvault;
+                console.log(newvault);
+                document.getElementById("p_Cash").innerText = "Account Balance of $" + newvault;
+        }
+
+        //fucntion for looser 
+        function lost(){
+            var betCash = document.getElementById("tb_Bet").value;
+            document.getElementById("d_Output").innerText = "You have lost!!" + betCash + "have diducted from your account";
+            console.log(cashOnHand);
+            var newvault = cashOnHand - betCash;
+            cashOnHand = newvault;
+            console.log(newvault);
+            document.getElementById("p_Cash").innerText = "Account Balance of $" + newvault;
+            
+
+
+        }
+        
+
+            
+        
+            
+        function playSlots(){
+            var slot1 = Math.floor(Math.random() *3 +1) ;
+            var slot2 = Math.floor(Math.random() *3 +1) ;
+            var slot3 = Math.floor(Math.random() *3 +1) ;
+           //bel 1
+           //seven 2
+           //cherry 3
+                document.getElementById("pic1").src = callSlot(slot1);
+                document.getElementById("pic2").src = callSlot(slot2);
+                document.getElementById("pic3").src = callSlot(slot3);
+
+                if (slot1 == slot2 && slot1 == slot3)
+                win();
+                else{
+                    var div1 = document.getElementById("div1");
+                   // div1.innerText = "you lost, please bet again";
+                    lost();
+                }
+
+
+
+        }
+
+            //function that assignes images to variable and returns the value to be outputed
+
+                function callSlot(num)
+            {
+                var imageSrc = ""; 
+
+                if (num == 1)
+                {
+                    // Image to return: Seven
+                    imageSrc = "images/Seven-512.png";
+                }
+                else if (num == 2)
+                {
+                    // Image to return: Cherry
+                    imageSrc = "images/Cherry-512.png";
+                }
+                else if (num == 3)
+                {
+                    // Image to return: Bell
+                    imageSrc = "images/Bell-512.png";
+                }
+                else
+                {
+                    imageSrc = "default.png"; // this does not exist. But we will be able to see if something goes wrong using this
+                }
+                return imageSrc;
+            }
+          
+           
+
+
+        </script>
+         
+          
+            
+      
+    </body>
+</html>
